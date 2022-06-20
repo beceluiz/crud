@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Flex,
@@ -11,11 +11,25 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
 } from "@chakra-ui/react";
 import { InputForm } from "../components/input";
 
 export default function Home() {
+  const [book, setBook] = useState("");
+  const [author, setAuthor] = useState("");
+
+  const handleSubtmitCreateClient = (event) => {
+    event.preventDefault();
+    console.log(book, author);
+  };
+
+  const handleChangeBook = ({ target }) => {
+    setBook(target.value);
+  };
+
+  const handleChangeAuthor = ({ target }) => {
+    setAuthor(target.value);
+  };
   return (
     <Box margin="4">
       {/* Header */}
@@ -26,11 +40,26 @@ export default function Home() {
         <Button colorScheme="blue">+</Button>
       </Flex>
       {/* Input */}
-      <VStack marginBottom="4">
-        <InputForm type="text" label="Name" name="Name" />
-        <InputForm type="email" label="Email" name="Email" />
+      <VStack marginY="1rem" as="form" onSubmit={handleSubtmitCreateClient}>
+        <InputForm
+          type="text"
+          label="Book"
+          name="book"
+          onChange={handleChangeBook}
+        />
+        <InputForm
+          type="text"
+          label="Author"
+          name="book"
+          onChange={handleChangeAuthor}
+        />
 
-        <Button colorScheme="blue" fontSize="sm" alignSelf="flex-end">
+        <Button
+          colorScheme="blue"
+          fontSize="sm"
+          alignSelf="flex-end"
+          type="submit"
+        >
           Submit
         </Button>
       </VStack>
@@ -38,15 +67,15 @@ export default function Home() {
       <Table variant="simple">
         <Thead bgColor="blue.500">
           <Tr>
-            <Th textColor="white">Name</Th>
-            <Th textColor="white">Email</Th>
+            <Th textColor="white">Book</Th>
+            <Th textColor="white">Author</Th>
             <Th textColor="white">Action</Th>
           </Tr>
         </Thead>
         <Tbody>
           <Tr>
-            <Td>Luiz Fernando</Td>
-            <Td>bckainight@nba.com</Td>
+            <Td>Harry Potter</Td>
+            <Td>J.K Rowling</Td>
             <Td>
               <Flex justifyContent="space-between">
                 <Button colorScheme="yellow" size="sm" font-size="smaller">
