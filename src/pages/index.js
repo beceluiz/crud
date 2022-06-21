@@ -26,6 +26,9 @@ export default function Home() {
     if (!title && !author) return;
 
     setBooks(books.concat({ title, author }));
+
+    setTitle("");
+    setAuthor("");
   };
 
   const handleChangeTitle = ({ target }) => {
@@ -50,12 +53,14 @@ export default function Home() {
           type="text"
           label="Title"
           name="title"
+          value={title}
           onChange={handleChangeTitle}
         />
         <InputForm
           type="text"
           label="Author"
           name="book"
+          value={author}
           onChange={handleChangeAuthor}
         />
 
