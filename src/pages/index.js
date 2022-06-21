@@ -15,6 +15,7 @@ import {
 import { InputForm } from "../components/input";
 
 export default function Home() {
+  const [ID, setID] = useState(null);
   const [books, setBooks] = useState([]);
 
   const [title, setTitle] = useState("");
@@ -33,6 +34,19 @@ export default function Home() {
     setAuthor("");
   };
 
+  const handleSubtmitUpdateBook = (event) => {
+    event.preventDefault();
+
+    if (!title && !author) return;
+
+    setBooks(
+      books.map((book) => (book._id === ID ? { title, author, _id: ID } : book))
+    );
+
+    setTitle("");
+    setAuthor("");
+  };
+
   const handleDeleteBook = (_id) => {
     setBooks(books.filter((book) => book._id !== _id));
   };
@@ -44,6 +58,12 @@ export default function Home() {
   const handleChangeAuthor = ({ target }) => {
     setAuthor(target.value);
   };
+
+  const handleShowUpdateBookForm = (book) => {
+    setID(book._id);
+    setTitle(book.title);
+    setAuthor(book.author);
+  };
   return (
     <Box margin="4">
       {/* Header */}
@@ -54,7 +74,11 @@ export default function Home() {
         <Button colorScheme="blue">+</Button>
       </Flex>
       {/* Input */}
-      <VStack marginY="1rem" as="form" onSubmit={handleSubtmitCreateBook}>
+      <VStack
+        marginY="1rem"
+        as="form"
+        onSubmit={ID ? handleSubtmitUpdateBook : handleSubtmitCreateBook}
+      >
         <InputForm
           type="text"
           label="Title"
@@ -76,7 +100,7 @@ export default function Home() {
           alignSelf="flex-end"
           type="submit"
         >
-          Submit
+          {ID ? "Update" : "Submit"}
         </Button>
       </VStack>
       {/* Table */}
@@ -95,7 +119,12 @@ export default function Home() {
               <Td>{book.author}</Td>
               <Td>
                 <Flex justifyContent="space-between">
-                  <Button colorScheme="yellow" size="sm" font-size="smaller">
+                  <Button
+                    colorScheme="yellow"
+                    size="sm"
+                    font-size="smaller"
+                    onClick={() => handleShowUpdateBookForm(book)}
+                  >
                     Edit
                   </Button>
                   <Button
