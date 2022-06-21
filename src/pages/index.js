@@ -20,12 +20,17 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
+  let id = 0;
+  function getId() {
+    return id++;
+  }
+
   const handleSubtmitCreateBook = (event) => {
     event.preventDefault();
 
     if (!title && !author) return;
 
-    setBooks(books.concat({ title, author }));
+    setBooks(books.concat({ _id: getId(), title, author }));
 
     setTitle("");
     setAuthor("");
