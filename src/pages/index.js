@@ -18,17 +18,32 @@ import { InputForm } from "../components/input";
 export default function Home() {
   const [ID, setID] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [errors, setErrors] = useState({ title: null, author: null });
 
   const [books, setBooks] = useState([]);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+
+  const isValidFormData = () => {
+    if (!title) {
+      setErrors({ title: "Please enter a title" });
+      return false;
+    }
+    if (!author) {
+      setErrors({ author: "Please enter a author" });
+      return false;
+    }
+
+    setErrors({});
+    return true;
+  };
 
   const generateID = () => Math.round(Math.random() * 1000);
 
   const handleSubtmitCreateBook = (event) => {
     event.preventDefault();
 
-    if (!title && !author) return;
+    if (!isValidFormData()) return;
 
     setBooks(books.concat({ _id: generateID(), title, author }));
 
@@ -40,7 +55,7 @@ export default function Home() {
   const handleSubtmitUpdateBook = (event) => {
     event.preventDefault();
 
-    if (!title && !author) return;
+    if (!isValidFormData()) return;
 
     setBooks(
       books.map((book) => (book._id === ID ? { title, author, _id: ID } : book))
@@ -98,13 +113,15 @@ export default function Home() {
             name="title"
             value={title}
             onChange={handleChangeTitle}
+            error={errors.title}
           />
           <InputForm
             type="text"
             label="Author"
-            name="book"
+            name="author"
             value={author}
             onChange={handleChangeAuthor}
+            error={errors.author}
           />
 
           <Button
