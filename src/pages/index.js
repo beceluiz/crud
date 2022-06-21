@@ -20,20 +20,21 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
-  let id = 0;
-  function getId() {
-    return id++;
-  }
+  const generateID = () => Math.round(Math.random() * 1000);
 
   const handleSubtmitCreateBook = (event) => {
     event.preventDefault();
 
     if (!title && !author) return;
 
-    setBooks(books.concat({ _id: getId(), title, author }));
+    setBooks(books.concat({ _id: generateID(), title, author }));
 
     setTitle("");
     setAuthor("");
+  };
+
+  const handleDeleteBook = (_id) => {
+    setBooks(books.filter((book) => book._id !== _id));
   };
 
   const handleChangeTitle = ({ target }) => {
@@ -89,7 +90,7 @@ export default function Home() {
         </Thead>
         <Tbody>
           {books.map((book) => (
-            <Tr key={book.title}>
+            <Tr key={book._id}>
               <Td>{book.title}</Td>
               <Td>{book.author}</Td>
               <Td>
@@ -97,7 +98,12 @@ export default function Home() {
                   <Button colorScheme="yellow" size="sm" font-size="smaller">
                     Edit
                   </Button>
-                  <Button colorScheme="red" size="sm" font-size="smaller">
+                  <Button
+                    colorScheme="red"
+                    size="sm"
+                    font-size="smaller"
+                    onClick={() => handleDeleteBook(book._id)}
+                  >
                     Remove
                   </Button>
                 </Flex>
