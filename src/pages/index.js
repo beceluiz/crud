@@ -15,16 +15,21 @@ import {
 import { InputForm } from "../components/input";
 
 export default function Home() {
-  const [book, setBook] = useState("");
+  const [books, setBooks] = useState([]);
+
+  const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
-  const handleSubtmitCreateClient = (event) => {
+  const handleSubtmitCreateBook = (event) => {
     event.preventDefault();
-    console.log(book, author);
+
+    if (!title && !author) return;
+
+    setBooks(books.concat({ title, author }));
   };
 
-  const handleChangeBook = ({ target }) => {
-    setBook(target.value);
+  const handleChangeTitle = ({ target }) => {
+    setTitle(target.value);
   };
 
   const handleChangeAuthor = ({ target }) => {
@@ -40,12 +45,12 @@ export default function Home() {
         <Button colorScheme="blue">+</Button>
       </Flex>
       {/* Input */}
-      <VStack marginY="1rem" as="form" onSubmit={handleSubtmitCreateClient}>
+      <VStack marginY="1rem" as="form" onSubmit={handleSubtmitCreateBook}>
         <InputForm
           type="text"
-          label="Book"
-          name="book"
-          onChange={handleChangeBook}
+          label="Title"
+          name="title"
+          onChange={handleChangeTitle}
         />
         <InputForm
           type="text"
@@ -73,20 +78,22 @@ export default function Home() {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>Harry Potter</Td>
-            <Td>J.K Rowling</Td>
-            <Td>
-              <Flex justifyContent="space-between">
-                <Button colorScheme="yellow" size="sm" font-size="smaller">
-                  Edit
-                </Button>
-                <Button colorScheme="red" size="sm" font-size="smaller">
-                  Remove
-                </Button>
-              </Flex>
-            </Td>
-          </Tr>
+          {books.map((book) => (
+            <Tr key={book.title}>
+              <Td>{book.title}</Td>
+              <Td>{book.author}</Td>
+              <Td>
+                <Flex justifyContent="space-between">
+                  <Button colorScheme="yellow" size="sm" font-size="smaller">
+                    Edit
+                  </Button>
+                  <Button colorScheme="red" size="sm" font-size="smaller">
+                    Remove
+                  </Button>
+                </Flex>
+              </Td>
+            </Tr>
+          ))}
         </Tbody>
       </Table>
     </Box>
