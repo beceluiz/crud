@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiFillCaretUp } from "react-icons/ai";
 import {
   Button,
   Flex,
@@ -16,8 +17,9 @@ import { InputForm } from "../components/input";
 
 export default function Home() {
   const [ID, setID] = useState(null);
-  const [books, setBooks] = useState([]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
+  const [books, setBooks] = useState([]);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
@@ -32,6 +34,7 @@ export default function Home() {
 
     setTitle("");
     setAuthor("");
+    toggleFormState();
   };
 
   const handleSubtmitUpdateBook = (event) => {
@@ -45,6 +48,8 @@ export default function Home() {
 
     setTitle("");
     setAuthor("");
+    setID(null);
+    setIsFormOpen(true);
   };
 
   const handleDeleteBook = (_id) => {
@@ -64,6 +69,11 @@ export default function Home() {
     setTitle(book.title);
     setAuthor(book.author);
   };
+
+  const toggleFormState = () => {
+    setIsFormOpen(!isFormOpen);
+  };
+
   return (
     <Box margin="4">
       {/* Header */}
@@ -71,40 +81,45 @@ export default function Home() {
         <Text color="black" fontSize="2xl">
           Crud
         </Text>
-        <Button colorScheme="blue">+</Button>
+        <Button colorScheme="blue" onClick={toggleFormState}>
+          {isFormOpen ? "-" : "+"}
+        </Button>
       </Flex>
       {/* Input */}
-      <VStack
-        marginY="1rem"
-        as="form"
-        onSubmit={ID ? handleSubtmitUpdateBook : handleSubtmitCreateBook}
-      >
-        <InputForm
-          type="text"
-          label="Title"
-          name="title"
-          value={title}
-          onChange={handleChangeTitle}
-        />
-        <InputForm
-          type="text"
-          label="Author"
-          name="book"
-          value={author}
-          onChange={handleChangeAuthor}
-        />
-
-        <Button
-          colorScheme="blue"
-          fontSize="sm"
-          alignSelf="flex-end"
-          type="submit"
+      {isFormOpen && (
+        <VStack
+          marginY="1rem"
+          as="form"
+          onSubmit={ID ? handleSubtmitUpdateBook : handleSubtmitCreateBook}
         >
-          {ID ? "Update" : "Submit"}
-        </Button>
-      </VStack>
+          <InputForm
+            type="text"
+            label="Title"
+            name="title"
+            value={title}
+            onChange={handleChangeTitle}
+          />
+          <InputForm
+            type="text"
+            label="Author"
+            name="book"
+            value={author}
+            onChange={handleChangeAuthor}
+          />
+
+          <Button
+            colorScheme="blue"
+            fontSize="sm"
+            alignSelf="flex-end"
+            type="submit"
+          >
+            {ID ? "Update" : "Submit"}
+          </Button>
+        </VStack>
+      )}
+
       {/* Table */}
-      <Table variant="simple">
+      <Table variant="simple" marginY="4">
         <Thead bgColor="blue.500">
           <Tr>
             <Th textColor="white">Book</Th>
