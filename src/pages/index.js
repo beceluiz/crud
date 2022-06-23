@@ -49,7 +49,6 @@ export default function Home() {
 
     setTitle("");
     setAuthor("");
-    toggleFormState();
   };
 
   const handleSubtmitUpdateBook = (event) => {
