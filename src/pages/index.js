@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillCaretUp } from "react-icons/ai";
 import {
   Button,
@@ -14,6 +14,7 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { InputForm } from "../components/input";
+import api from "./api/api";
 
 export default function Home() {
   const [ID, setID] = useState(null);
@@ -40,16 +41,26 @@ export default function Home() {
 
   const generateID = () => Math.round(Math.random() * 1000);
 
-  const handleSubtmitCreateBook = (event) => {
+  const handleSubtmitCreateBook = async (event) => {
     event.preventDefault();
 
     if (!isValidFormData()) return;
 
-    setBooks(books.concat({ _id: generateID(), title, author }));
+    try {
+      const { data } = await api.post("/books", { title, author });
 
-    setTitle("");
-    setAuthor("");
+      setBooks(books.concat(data.data));
+
+      setTitle("");
+      setAuthor("");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    api.get("/books").then(({ data }) => setBooks(data.data));
+  }, []);
 
   const handleSubtmitUpdateBook = (event) => {
     event.preventDefault();

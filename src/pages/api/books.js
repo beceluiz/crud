@@ -10,10 +10,10 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const books = await Book.find({});
-        res.status(200).json(books);
-      } catch (err) {
-        console.log(err);
-        res.status(500).json({ sucess: false, err });
+        res.status(200).json({ sucess: true, data: books });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ sucess: false, error });
       }
 
       break;
@@ -21,14 +21,14 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { title, author } = req.body;
-        if (title && author) throw "invalid data";
+        if (!title && !author) throw "invalid data";
 
         const book = await Book.create({ title, author });
 
-        res.status(201).json(book);
-      } catch (err) {
-        console.log(err);
-        res.status(500).json({ sucess: false, err });
+        res.status(201).json({ sucess: true, data: book });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ sucess: false, error });
       }
   }
 }
