@@ -62,23 +62,31 @@ export default function Home() {
     api.get("/books").then(({ data }) => setBooks(data.data));
   }, []);
 
-  const handleSubtmitUpdateBook = (event) => {
+  const handleSubtmitUpdateBook = async (event) => {
     event.preventDefault();
 
     if (!isValidFormData()) return;
 
-    setBooks(
-      books.map((book) => (book._id === ID ? { title, author, _id: ID } : book))
-    );
+    try {
+      await api.put(`/books/${ID}`, { title, author });
+      setBooks(
+        books.map((book) =>
+          book._id === ID ? { title, author, _id: ID } : book
+        )
+      );
 
-    setTitle("");
-    setAuthor("");
-    setID(null);
-    setIsFormOpen(true);
+      setTitle("");
+      setAuthor("");
+      setID(null);
+      setIsFormOpen(true);
+    } catch (error) {}
   };
 
-  const handleDeleteBook = (_id) => {
-    setBooks(books.filter((book) => book._id !== _id));
+  const handleDeleteBook = async (_id) => {
+    try {
+      await api.delete(`/books/${_id}`);
+      setBooks(books.filter((book) => book._id !== _id));
+    } catch (error) {}
   };
 
   const handleChangeTitle = ({ target }) => {

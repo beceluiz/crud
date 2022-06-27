@@ -1,5 +1,5 @@
-import Book from "../../models/Book";
-import dbConnect from "../services/db";
+import Book from "../../../models/Book";
+import dbConnect from "../../services/db";
 
 dbConnect();
 
@@ -10,10 +10,10 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const books = await Book.find({});
-        res.status(200).json({ sucess: true, data: books });
+        res.status(200).json({ success: true, data: books });
       } catch (error) {
         console.log(error);
-        res.status(500).json({ sucess: false, error });
+        res.status(500).json({ success: false, error });
       }
 
       break;
@@ -25,10 +25,10 @@ export default async function handler(req, res) {
 
         const book = await Book.create({ title, author });
 
-        res.status(201).json({ sucess: true, data: book });
+        res.status(201).json({ success: true, data: book });
       } catch (error) {
         console.log(error);
-        res.status(500).json({ sucess: false, error });
+        res.status(500).json({ success: false, error });
       }
   }
 }
