@@ -113,7 +113,16 @@ export default function Home() {
     try {
       await api.delete(`/books/${_id}`);
       setBooks(books.filter((book) => book._id !== _id));
-    } catch (error) {}
+      toast({
+        title: "Book Deleted.",
+        description: "We've deleted the book for you.",
+        status: "sucess",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChangeTitle = ({ target }) => {
