@@ -116,7 +116,7 @@ export default function Home() {
       toast({
         title: "Book Deleted.",
         description: "We've deleted the book for you.",
-        status: "sucess",
+        status: "success",
         duration: 3000,
         isClosable: true,
       });
