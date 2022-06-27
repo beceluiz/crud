@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const books = await Book.find({});
-        res.status(200).json({ title: "harrt oitter" });
+        res.status(200).json(books);
       } catch (err) {
         console.log(err);
       }
