@@ -12,18 +12,26 @@ import {
   Tr,
   Th,
   Td,
+  useToast,
 } from "@chakra-ui/react";
 import { InputForm } from "../components/input";
 import api from "./api/api";
 
 export default function Home() {
+  const toast = useToast();
+
   const [ID, setID] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [errors, setErrors] = useState({ title: null, author: null });
+  const [isLoading, setIsLoading] = useState(false);
 
   const [books, setBooks] = useState([]);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+
+  useEffect(() => {
+    api.get("/books").then(({ data }) => setBooks(data.data));
+  }, []);
 
   const isValidFormData = () => {
     if (!title) {
@@ -47,20 +55,27 @@ export default function Home() {
     if (!isValidFormData()) return;
 
     try {
+      setIsLoading(true);
       const { data } = await api.post("/books", { title, author });
 
       setBooks(books.concat(data.data));
 
       setTitle("");
       setAuthor("");
+      setIsLoading(false);
+
+      toast({
+        title: "Book Listed.",
+        description: "We've listed the book for you.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    api.get("/books").then(({ data }) => setBooks(data.data));
-  }, []);
 
   const handleSubtmitUpdateBook = async (event) => {
     event.preventDefault();
@@ -68,6 +83,7 @@ export default function Home() {
     if (!isValidFormData()) return;
 
     try {
+      setIsLoading(true);
       await api.put(`/books/${ID}`, { title, author });
       setBooks(
         books.map((book) =>
@@ -79,7 +95,18 @@ export default function Home() {
       setAuthor("");
       setID(null);
       setIsFormOpen(true);
-    } catch (error) {}
+      setIsLoading(false);
+      toast({
+        title: "Book Updated.",
+        description: "We've updated the book for you.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   const handleDeleteBook = async (_id) => {
@@ -147,6 +174,7 @@ export default function Home() {
             fontSize="sm"
             alignSelf="flex-end"
             type="submit"
+            isLoading={isLoading}
           >
             {ID ? "Update" : "Submit"}
           </Button>
