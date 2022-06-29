@@ -16,7 +16,3 @@ Dont forget to run `yarn install` to install all depenencies before running the 
   - NextJS
   - ChakraUI
   - MongoDB
-
-## Available Scripts
-
-In the project directory, you can run:
