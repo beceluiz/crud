@@ -2,10 +2,6 @@
 
 <img src="src/assets/crud-next.gif">
 
-
-
-
----
 ## 🚀 Technologies Used
 
   - React
@@ -13,8 +9,6 @@
   - ChakraUI
   - MongoDB
   
-
----
 ## ☕ Run
 ```shell
 $ git clone https://github.com/beceluiz/crud.git
