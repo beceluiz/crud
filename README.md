@@ -1,13 +1,9 @@
 # Crud made with React (NextJS) & MongoDB
 
-<img src>
+<img src="src/assets/crud-next.gif">
 
 
----
 
-
-## ⚠️ important Info ⚠️
-Dont forget to run `yarn install` to install all depenencies before running the project.
 
 ---
 ## 🚀 Technologies Used
@@ -16,3 +12,13 @@ Dont forget to run `yarn install` to install all depenencies before running the 
   - NextJS
   - ChakraUI
   - MongoDB
+  
+
+---
+## ☕ Run
+```shell
+$ git clone https://github.com/beceluiz/crud.git
+$ cd crud
+$ yarn
+$ yarn dev
+```
