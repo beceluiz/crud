@@ -1,4 +1,4 @@
-# Crud made with React (NextJS) & MongoDB
+# A Books Plan-to-Read CRUD made with NextJS & MongoDB
 
 <img src="src/assets/crud-next.gif">
 
