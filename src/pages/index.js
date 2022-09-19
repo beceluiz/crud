@@ -46,8 +46,6 @@ export default function Home() {
     return true;
   };
 
-  const generateID = () => Math.round(Math.random() * 1000);
-
   const handleSubtmitCreateBook = async (event) => {
     event.preventDefault();
 
@@ -147,7 +145,7 @@ export default function Home() {
       {/* Header */}
       <Flex color="white" justifyContent="space-between">
         <Text color="black" fontSize="2xl">
-          Crud
+          Book List
         </Text>
         <Button colorScheme="blue" onClick={toggleFormState}>
           {isFormOpen ? "-" : "+"}
