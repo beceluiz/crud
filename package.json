@@ -15,7 +15,7 @@
     "axios": "^0.27.2",
     "env-cmd": "^10.1.0",
     "framer-motion": "^6",
-    "mongoose": "^6.4.0",
+    "mongoose": "^6.4.6",
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"
