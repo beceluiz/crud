@@ -1,5 +1,5 @@
 import Book from "../../../models/Book";
-import dbConnect from "../../services/db";
+import dbConnect from "../../../services/db";
 
 dbConnect();
 
