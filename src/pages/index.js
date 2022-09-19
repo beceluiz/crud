@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AiFillCaretUp } from "react-icons/ai";
 import {
   Button,
   Flex,
@@ -15,7 +14,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { InputForm } from "../components/input";
-import api from "./api/api";
+import api from "../services/api";
 
 export default function Home() {
   const toast = useToast();
