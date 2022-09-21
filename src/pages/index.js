@@ -15,7 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { InputForm } from "../components/input";
 import api from "../services/api";
+import PuffLoader from "react-spinners/PuffLoader";
 
+const override = {
+  display: "block",
+  marginTop: "50px",
+  marginLeft: " 600px",
+  borderColor: "red",
+};
 export default function Home() {
   const toast = useToast();
 
@@ -141,45 +148,45 @@ export default function Home() {
   };
 
   return (
-    <Box margin="4">
+    <Box margin='4'>
       {/* Header */}
-      <Flex color="white" justifyContent="space-between">
-        <Text color="black" fontSize="2xl">
+      <Flex color='white' justifyContent='space-between'>
+        <Text color='black' fontSize='2xl'>
           Book List
         </Text>
-        <Button colorScheme="blue" onClick={toggleFormState}>
+        <Button colorScheme='blue' onClick={toggleFormState}>
           {isFormOpen ? "-" : "+"}
         </Button>
       </Flex>
       {/* Input */}
       {isFormOpen && (
         <VStack
-          marginY="1rem"
-          as="form"
+          marginY='1rem'
+          as='form'
           onSubmit={ID ? handleSubtmitUpdateBook : handleSubtmitCreateBook}
         >
           <InputForm
-            type="text"
-            label="Title"
-            name="title"
+            type='text'
+            label='Title'
+            name='title'
             value={title}
             onChange={handleChangeTitle}
             error={errors.title}
           />
           <InputForm
-            type="text"
-            label="Author"
-            name="author"
+            type='text'
+            label='Author'
+            name='author'
             value={author}
             onChange={handleChangeAuthor}
             error={errors.author}
           />
 
           <Button
-            colorScheme="blue"
-            fontSize="sm"
-            alignSelf="flex-end"
-            type="submit"
+            colorScheme='blue'
+            fontSize='sm'
+            alignSelf='flex-end'
+            type='submit'
             isLoading={isLoading}
           >
             {ID ? "Update" : "Submit"}
@@ -187,43 +194,51 @@ export default function Home() {
         </VStack>
       )}
 
-      {/* Table */}
-      <Table variant="simple" marginY="4">
-        <Thead bgColor="blue.500">
+      <Table variant='simple' marginY='4'>
+        <Thead bgColor='blue.500'>
           <Tr>
-            <Th textColor="white">Book</Th>
-            <Th textColor="white">Author</Th>
-            <Th textColor="white">Action</Th>
+            <Th textColor='white'>Book</Th>
+            <Th textColor='white'>Author</Th>
+            <Th textColor='white'>Action</Th>
           </Tr>
         </Thead>
-        <Tbody>
-          {books.map((book) => (
-            <Tr key={book._id}>
-              <Td>{book.title}</Td>
-              <Td>{book.author}</Td>
-              <Td>
-                <Flex justifyContent="space-between">
-                  <Button
-                    colorScheme="yellow"
-                    size="sm"
-                    font-size="smaller"
-                    onClick={() => handleShowUpdateBookForm(book)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    font-size="smaller"
-                    onClick={() => handleDeleteBook(book._id)}
-                  >
-                    Remove
-                  </Button>
-                </Flex>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
+        {isLoading ? (
+          <PuffLoader
+            loading={isLoading}
+            color='#3182CE'
+            cssOverride={override}
+            size={50}
+          />
+        ) : (
+          <Tbody>
+            {books.map((book) => (
+              <Tr key={book._id}>
+                <Td>{book.title}</Td>
+                <Td>{book.author}</Td>
+                <Td>
+                  <Flex justifyContent='space-between'>
+                    <Button
+                      colorScheme='yellow'
+                      size='sm'
+                      font-size='smaller'
+                      onClick={() => handleShowUpdateBookForm(book)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      colorScheme='red'
+                      size='sm'
+                      font-size='smaller'
+                      onClick={() => handleDeleteBook(book._id)}
+                    >
+                      Remove
+                    </Button>
+                  </Flex>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        )}
       </Table>
     </Box>
   );
