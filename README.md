@@ -6,13 +6,14 @@ You can check the app on the website: <a href="https://plan-to-read-booklist.ver
 
 ## 🚀 Technologies Used
 
-  - React
+  - Javascript
+  - ReactJS 
   - NextJS
-  - ChakraUI
+  - ChakraUI 
   - MongoDB
   - Jest
   - Babel
-  
+  - Axios
   
 ## ☕ Run
 ```shell
