@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "jest".
-    "lint": "next lint"
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/preset-react": "^7.18.6",
