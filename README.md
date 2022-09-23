@@ -10,6 +10,9 @@ You can check the app on the website: <a href="https://plan-to-read-booklist.ver
   - NextJS
   - ChakraUI
   - MongoDB
+  - Jest
+  - Babel
+  
   
 ## ☕ Run
 ```shell
