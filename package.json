@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd -f .env.development next dev",
+    "dev": "next dev",
     "build": "next build",
-    "test": "jest",
-    "start:prod": "env-cmd -f .env.production next start",
+    "test": "jest".
     "lint": "next lint"
   },
   "dependencies": {
